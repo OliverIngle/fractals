@@ -35,12 +35,12 @@ def precise_mandlebrot(C, precision, initial_iterations):
     z = julia(complex(0, 0), C, 10)
     gradient = int(255 / precision)
     if abs(z) >= 2:
-        return (False, (precision - initial_iterations) * gradient)
+        return (False, (initial_iterations * gradient))
     else:
         for i in range(precision - initial_iterations):
             z = julia(z, C, 1)
             if abs(z) >= 2:
-                return (False, i * gradient)
+                return (False, (i + initial_iterations) * gradient)
         return (True, 0)
 
 
@@ -58,7 +58,7 @@ for i in range(-499, 499):
         if is_stable:
             img.put("black", d(x, y))
         else:
-            hex = f'#{g:02x}{g:02x}{g:02x}'
+            hex = f'#{0:02x}{0:02x}{g:02x}'
             img.put(hex, d(x, y))
 
         if x == 0:
